@@ -5,7 +5,7 @@ services:
     volumes:
       - esdata:/usr/share/elasticsearch/data
       - /mnt/il060-samba-share/il08X/datastack/esbackup:/usr/share/elasticsearch/backup
-#      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+#      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
 #      - ./elasticsearch/config/log4j2.properties:/usr/share/elasticsearch/config/log4j2.properties:ro
     configs:
       - source: esconfig
@@ -85,6 +85,8 @@ services:
       - datastore
     depends_on:
       - elasticsearch
+#    restart:
+#      always
     deploy:
       resources:
         limits:

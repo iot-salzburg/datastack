@@ -65,7 +65,7 @@ services:
         limits:
           cpus: "1"
           memory: 1G
-      replicas: 2
+      replicas: 3
       placement:
         constraints: [node.role == worker]
       update_config:
@@ -85,12 +85,14 @@ services:
       - datastore
     depends_on:
       - elasticsearch
+#    restart:
+#      always
     deploy:
       resources:
         limits:
           cpus: "2"
           memory: 1G
-      replicas: 1
+      replicas: 2
       placement:
         constraints: [node.role == worker]
       update_config:
