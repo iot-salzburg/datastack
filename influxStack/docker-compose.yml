@@ -1,0 +1,27 @@
+version: "3.4"
+services:
+  collectd:
+    image: fr3nd/collectd
+    privileged: true
+    network_mode: host
+    volumes:
+#      - /proc:/mnt/proc:ro
+      - ./collectd.conf:/etc/collectd/collectd.conf
+
+  influxdb:
+    image: influxdb:1.6
+    ports:
+      - "3004:8083"
+      - "8086:8086"
+      - "25826:25826/udp"
+    volumes:
+#      - /var/lib/influxdb
+      - ./influxdb.conf:/etc/influxdb/influxdb.conf
+      - ./types.db:/usr/share/collectd/types.db:ro
+
+  grafana:
+    image: grafana/grafana:3.1.1
+    ports:
+      - "3003:3000"
+#    volumes:
+#      - /var/lib/grafana
