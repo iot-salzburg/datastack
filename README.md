@@ -1,10 +1,15 @@
-# Data-Stack composed by Elastic Stack, Grafana, Jupyter, Spark and DB-adapter to stream data from a kafka broker
+# Datastack for storing, visualizing and analysing data
 
+composed by either an elastic, or influxDB based approach.
 
-Based on the following Components:
-* [Elasticsearch 6.2](https://github.com/elastic/elasticsearch-docker)
-* [Logstash 6.2](https://github.com/elastic/logstash-docker)
-* [Kibana 6.2](https://github.com/elastic/kibana-docker)
+InfluxDB is very nice for storing metric data, as we deal with.
+However, the open source variant doesn't support scaling on a cluster.
+Therefore, the Elastic Stack is our choice.
+
+The datastack is based on the following Components:
+* [Elasticsearch 6.3](https://github.com/elastic/elasticsearch-docker)
+* [Logstash 6.3](https://github.com/elastic/logstash-docker)
+* [Kibana 6.3](https://github.com/elastic/kibana-docker)
 * [Grafana 5](http://docs.grafana.org/)
 * [Spark 2.1.1](http://spark.apache.org/docs/2.1.1)
 * [Hadoop 2.7.3](http://hadoop.apache.org/docs/r2.7.3)
@@ -12,55 +17,32 @@ Based on the following Components:
 * [Anaconda3-5](https://www.anaconda.com/distribution/)
 
 
-The designated way to feed data into the DataStack is from the
-[Apache Kafka](https://kafka.apache.org/) message bus.
+Our method to feed data into the DataStack is from the
+[Apache Kafka](https://kafka.apache.org/) message bus via the
+[db-adapter](https://github.com/iot-salzburg/messaging-system/tree/master/compose/db-adapter).
+
 
 ## Contents
 
 1. [Requirements](#requirements)
-2. [Getting started](#getting-started)
-    * [Local deployment](#Local-deployment)
-    * [Deploy in a docker swarm](#Deploy-in-a-docker-swarm)
-    * [Services](#Services)
-    * [Tracing](#Tracing)
-    * [Data Feeding](#Data-Feeding)
-3. [Trouble-shooting](#Trouble-shooting)
+2. [Deployment](#deployment)
+3. [Services](#services)
+4. [Proxy Config](#proxy-config)
+5. [Trouble-shooting](#trouble-shooting)
+
 
 
 ## Requirements
 
 1. Install [Docker](https://www.docker.com/community-edition#/download) version **1.10.0+**
 2. Install [Docker Compose](https://docs.docker.com/compose/install/) version **1.6.0+**
-3. Clone this repository
-
-
-## Getting Started
-
-This repository is divided into a swarm path and compose path, where the compose path
-serves as a staging environment.
-
-### Local deployment
-Start the Data-Stack in a local testing environment using `docker-compose`:
-
-```bash
-cd swarm/
-sudo docker-compose up --build -d
-
-sudo docker-compose logs -f
-```
-
-The flag `-d` stands for running it in background (detached mode).
-
-
-To stop the container use this command with the --volume (-v) flag.
-```bash
-sudo docker-compose down -v
-```
+3. Setting up a [Docker Swarm](https://www.youtube.com/watch?v=x843GyFRIIY) on a cluster.
+4. Clone this repository on the manager node of the docker swarm.
 
 
 
+## Deployment
 
-### Deploy in a docker swarm
 
 This section requires a running `docker swarm`. If not already done, check out
 [this video tutorial](https://www.youtube.com/watch?v=KC4Ad1DS8xU&t=192s)
@@ -76,25 +58,26 @@ deployable: (we are using port 5001, as logstash's default port is 5000)
 sudo docker service create --name registry --publish published=5001,target=5000 registry:2
 curl 127.0.0.1:5001/v2/
 ```
-This should output {}:
+This should output `{}`:
 
 
-Now register the customized images defined in the `docker-compose.yml`.
+Running these commands will build, push and deploy the stack:
 ```bash
-cd /swarm/
-sudo docker-compose build
-sudo docker-compose push
+git clone https://github.com/iot-salzburg/dtz_datastack.git
+cd dtz_datastack/elasticStack/
+./start_stack.sh
 ```
 
 
-After that we can deploy the dataStack
+With these commands we can see if everything worked well:
 ```bash
-sudo docker stack deploy --compose-file docker-compose.yml elk
+./show_stack.sh
+docker service ps service-name (e.g stack_elasticsearch)
 ```
 
 
 
-###  Services
+##  Services
 
 Give Kibana a minute to initialize, then access the Kibana web UI by hitting
 [http://localhost:5601](http://localhost:5601) with a web browser.
@@ -106,12 +89,14 @@ On Kibana UI, DevTools we can trace the indexing success by hitting the REST req
 
 By default, the stack exposes the following ports:
 * 5000: Logstash TCP input
-* 9200: Elasticsearch HTTP
 * 9600: Logstash HTTP
 * **5601: Kibana:** User Interface for data in Elasticsearch
-* 3030: Kafka-DataStack Adapter HTTP: This one requires the db-adapter
-* **8080: Swarm Visalizer:** Watch all services on the swarm
-* **8888: Jupyter GUI:** Run Python and R notebooks with Spark support on elastic data
+* **8080: Grafana** Grafic visualisation specialised for metric data
+* **8888: Jupyter GUI:** Run Python and R notebooks along Spark
+on elastic data
+
+**bold** listings stand for User interfaces.
+
 
 
 ### Tracing
@@ -119,31 +104,14 @@ By default, the stack exposes the following ports:
 Watch if everything worked fine with:
 ```bash
 sudo docker service ls
-sudo docker stack ps db-adapter
-sudo docker service logs db-adapter_kafka -f
+sudo docker service logs -f service-name
+sudo docker service ps service-name --no-trunc
 ```
 
 
 
 
-### Data Feeding
-
-In order to feed the Data-Stack with data, we can use the
-[Kafka-DataStack Adapter](https://github.com/i-maintenance/DB-Adapter).
-
-The Kafka-Adapter automatically fetches data from the kafka message bus on
-topic **SensorData**. The selected topics can be specified in
-`.env` file of the Kafka-DataStack Adapter
-
-
-To test the Data-Stack itself (without the kafka adapter), inject example log entries via TCP by:
-
-```bash
-$ nc hostname 5000 < /path/to/logfile.log
-```
-
-
-### Proxy Config
+## Proxy Config
 
 If used behind an apache2 proxy, make sure to enable additional moduls
 ```bash
