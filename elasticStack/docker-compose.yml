@@ -27,11 +27,11 @@ services:
     deploy:
       placement:
         constraints: [node.role == worker]
-#      resources:
-#        limits:
-#          cpus: "1"
-#          memory: 10G
-      replicas: 2
+      resources:
+        limits:
+          cpus: "1"
+          memory: 6G
+      replicas: 1
       update_config:
         parallelism: 2
         delay: 10s
@@ -133,29 +133,29 @@ services:
 
 
 # https://github.com/jupyter/docker-stacks/tree/master/all-spark-notebook
-  jupyter:
-    image: 127.0.0.1:5001/jupyter
-    build: jupyter/
-    ports:
-      - 8888:8888
-    volumes:
-      - /mnt/il060-samba-share/il08X/datastack/jupyter/sample:/home/jovyan/work/sample
-#      - jupyterdata:/home/jovyan/work
-    networks:
-      - datastore
-    deploy:
-      placement:
-        constraints: [node.role == worker]
-#      resources:
-#        limits:
-#          cpus: "1"
-#          memory: 6G
-      replicas: 1
-      update_config:
-        parallelism: 2
-        delay: 10s
-      restart_policy:
-        condition: on-failure
+#  jupyter:
+#    image: 127.0.0.1:5001/jupyter
+#    build: jupyter/
+#    ports:
+#      - 8888:8888
+#    volumes:
+#      - /mnt/il060-samba-share/il08X/datastack/jupyter/sample:/home/jovyan/work/sample
+##      - jupyterdata:/home/jovyan/work
+#    networks:
+#      - datastore
+#    deploy:
+#      placement:
+#        constraints: [node.role == worker]
+##      resources:
+##        limits:
+##          cpus: "1"
+##          memory: 6G
+#      replicas: 1
+#      update_config:
+#        parallelism: 2
+#        delay: 10s
+#      restart_policy:
+#        condition: on-failure
 
 
 
