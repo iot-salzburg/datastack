@@ -126,7 +126,7 @@ COPY jupyter_notebook_config.py /etc/jupyter/jupyter_notebook_config.py
 
 
 # these 2 commands where uncommented. it seems that it is also possible without it
-RUN chmod -R 755 /home/jovyan
-RUN chown -R jovyan:users /home/jovyan
+#RUN chmod -R 755 /home/jovyan
+#RUN chown -R jovyan:users /home/jovyan
 
 USER $NB_UID
