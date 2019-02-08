@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  datastore-adapter:
+    image: 127.0.0.1:5001/datastore-adapter
+    build: .
+    networks:
+      - datastore-adapter
+    deploy:
+      placement:
+        constraints: [node.role == worker]
+      resources:
+        limits:
+          cpus: "1"
+          memory: 4G
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+# Network
+networks:
+  datastore-adapter:
