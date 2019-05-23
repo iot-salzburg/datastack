@@ -30,4 +30,5 @@ ADD . /src
 ENV PYTHONPATH /src/panta_rhei
 WORKDIR /src
 
-ENTRYPOINT ["python", "/src/panta_rhei/demo_applications/datastore/datastore_adapter/datastore_adapter.py"]
+# ENTRYPOINT ["python", "/src/panta_rhei/demo_applications/datastore/datastore_adapter/datastore_adapter.py"]
+ENTRYPOINT ["python", "/src/adapter/datastore_adapter.py"]
