@@ -40,9 +40,9 @@ Our method to feed data into the DataStack is from the
 4. Clone this repository on the manager node of the docker swarm.
 
 
-
 ## Deployment
 
+### Setting up the docker environement
 
 This section requires a running `docker swarm`. If not already done, check out
 [this video tutorial](https://www.youtube.com/watch?v=KC4Ad1DS8xU&t=192s)
@@ -60,6 +60,7 @@ curl 127.0.0.1:5001/v2/
 ```
 This should output `{}`:
 
+### Setting up the Elastic Stack, Jupyter and Grafana
 
 Running these commands will build, push and deploy the stack:
 ```bash
@@ -68,13 +69,35 @@ cd dtz_datastack/elasticStack/
 ./start_stack.sh
 ```
 
-
 With these commands we can see if everything worked well:
 ```bash
 ./show_stack.sh
 docker service ps service-name (e.g stack_elasticsearch)
 ```
 
+### Setting up the Datastack Adapter
+
+This step requires a running `Panta Rhei` environment.
+
+Install the Panta Rhei client:
+
+```bash
+ git clone https://github.com/iot-salzburg/panta_rhei datastack-adapter/panta_rhei > /dev/null 2>&1 || echo "Repo already exists"
+ 2142  git -C datastack-adapter/panta_rhei/ checkout srfg-digitaltwin
+ 2143  git -C datastack-adapter/panta_rhei/ pull
+ ```
+ 
+ Configure the Panta Rhei system and substribe to datastreams:
+ ```python
+ # Set the configs, create a new Digital Twin Instance and register file structure
+config = {"client_name": "datastore-adapter",
+          "system": "at.srfg.iot.dtz",
+          "kafka_bootstrap_servers": "192.168.48.71:9092,192.168.48.72:9092,192.168.48.73:9092,192.168.48.74:9092,192.168.48.75:9092"
+          "gost_servers": "192.168.48.71:8082"}
+client = DigitalTwinClient(**config)
+# client.register(instance_file=INSTANCES)
+client.subscribe(subscription_file=SUBSCRIPTIONS)
+```
 
 
 ##  Services
