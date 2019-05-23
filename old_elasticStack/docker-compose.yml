@@ -44,8 +44,8 @@ services:
     configs:
       - source: lsconfig
         target: /usr/share/logstash/config/logstash.yml
-    volumes:
-      - ./logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - source: lspipeline
+        target: /usr/share/logstash/pipeline/logstash.conf
     ports:
       - "5000:5000"
       - "9600:9600"
@@ -102,7 +102,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      -  /mnt/glusterfs/dtz/datastack/grafanadata:/var/lib/grafana
+      -  /mnt/il060-samba-share/grafanadata:/var/lib/grafana
     networks:
       - datastore
     depends_on:
@@ -177,5 +177,6 @@ configs:
     file: kibana/config/kibana.yml
   lsconfig:
     file: logstash/config/logstash.yml
-#  lspipeline:
-#    file: logstash/pipeline/logstash.conf
+  lspipeline:
+    file: logstash/pipeline/logstash.conf
+

@@ -1,5 +1,5 @@
 # set indexes to be created
-action.auto_create_index: .security,.monitoring*,.watches,.triggered_watches,.watcher-history*,logstash*,data-*,logging-*,eu.*
+action.auto_create_index: .security,.monitoring*,.watches,.triggered_watches,.watcher-history*,logstash*,data-*,logging-*
 
 network.host: ${HOSTNAME}
 #network.host: 0.0.0.0
@@ -8,7 +8,7 @@ network.host: ${HOSTNAME}
 # be sure to modify it appropriately for a production cluster deployment
 discovery.zen.minimum_master_nodes: 2
 
-#path.repo: ["/usr/share/elasticsearch/backup/"]
+path.repo: ["/usr/share/elasticsearch/backup/"]
 
 # allow url for restoring backups
 repositories.url.allowed_urls: ["http://il060/es_backup/*"]
@@ -17,7 +17,7 @@ discovery.zen.ping.unicast.hosts: elasticsearch
 cluster.name: il.es.cluster
 node.name: ${HOSTNAME}
 
-node.max_local_storage_nodes: 3 
+node.max_local_storage_nodes: 5 
 # defaults:
 #node.master: true
 #node.data: true

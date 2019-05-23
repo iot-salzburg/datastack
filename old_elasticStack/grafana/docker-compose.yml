@@ -7,15 +7,11 @@ services:
     ports:
       - 3000:3000
     volumes:
-      -  /mnt/il060-samba-share/grafanadata:/var/lib/grafana
-    networks:
-      - datastore
+      -  /mnt/il060-samba-share/il08X/grafanadata:/var/lib/grafana
     environment:
       GF_SECURITY_ADMIN_PASSWORD: admin
       ELASTICSEARCH_ENDPOINT: http://elasticsearch:9200
-      GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s/grafana/"
-#      ELASTICSEARCH_USER: ${ES_USERNAME}
-#      ELASTICSEARCH_PASSWORD: ${ES_PASSWORD}
+#      GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s/grafana/"
     deploy:
       resources:
         limits:
@@ -30,5 +26,3 @@ services:
       restart_policy:
        condition: on-failure
 
-networks:
-  datastore:

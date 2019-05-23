@@ -4,8 +4,8 @@ services:
   datastore-adapter:
     image: 127.0.0.1:5001/datastore-adapter
     build: .
-    networks:
-      - datastore-adapter
+#    networks:
+#      - datastore-adapter
     deploy:
       placement:
         constraints: [node.role == worker]
@@ -21,5 +21,5 @@ services:
         condition: on-failure
 
 # Network
-networks:
-  datastore-adapter:
+#networks:
+#  datastore-adapter:

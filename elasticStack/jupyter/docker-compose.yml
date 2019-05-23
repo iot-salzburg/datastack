@@ -2,23 +2,24 @@ version: "3.4"
 services:
 
 # https://github.com/jupyter/docker-stacks/tree/master/all-spark-notebook
-  jupyter:
+  jupyter: 
     image: 127.0.0.1:5001/jupyter
-    build: ../jupyter/
+    build: /
+#jupyter/
     ports:
       - 8888:8888
-    volumes:
-      - /mnt/il060-samba-share/il08X/datastack/jupyter/sample:/home/jovyan/work/sample
-#      - jupyterdata:/home/jovyan/work
+#    volumes:
+#      - /mnt/il060-samba-share/jupyter_notebooks/testing:/home/jovyan/work/testing
+#      - jupyterdata:/home/jovyan/work 
     networks:
       - datastore
     deploy:
       placement:
         constraints: [node.role == worker]
-      resources:
-        limits:
-          cpus: "1"
-          memory: 6G
+#      resources:
+#        limits:
+#          cpus: "1"
+#          memory: 8G
       replicas: 1
       update_config:
         parallelism: 2
@@ -27,28 +28,13 @@ services:
         condition: on-failure
 
 
+
 volumes:
-  esdata:
+  jupyterdata:
     driver: local
-  pipeline:
-    driver: local
-  grafanadata:
-    driver: local
-#  jupyterdata:
-#    driver: local
 
 networks:
   datastore:
 
-configs:
-  esconfig:
-    file: elasticsearch/config/elasticsearch.yml
-  eslog4jconf:
-    file: elasticsearch/config/log4j2.properties
-  kibanaconfig:
-    file: kibana/config/kibana.yml
-  lsconfig:
-    file: logstash/config/logstash.yml
-  lspipeline:
-    file: logstash/pipeline/logstash.conf
+
 

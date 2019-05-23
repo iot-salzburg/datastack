@@ -1,10 +1,10 @@
 version: "3.4"
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.3.1
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.2
     volumes:
       - esdata:/usr/share/elasticsearch/data
-      - /mnt/il060-samba-share/il08X/datastack/esbackup:/usr/share/elasticsearch/backup
+      - /mnt/il060-samba-share/esbackup:/usr/share/elasticsearch/backup
 #      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
 #      - ./elasticsearch/config/log4j2.properties:/usr/share/elasticsearch/config/log4j2.properties:ro
     configs:
@@ -27,11 +27,11 @@ services:
     deploy:
       placement:
         constraints: [node.role == worker]
-#      resources:
-#        limits:
-#          cpus: "1"
-#          memory: 10G
-      replicas: 2
+      resources:
+        limits:
+          cpus: "1"
+          memory: 10G
+      replicas: 3
       update_config:
         parallelism: 2
         delay: 10s
@@ -45,7 +45,7 @@ services:
 
 
   logstash:
-    image: docker.elastic.co/logstash/logstash-oss:6.3.1
+    image: docker.elastic.co/logstash/logstash-oss:6.2.2
     configs:
       - source: lsconfig
         target: /usr/share/logstash/config/logstash.yml
@@ -64,8 +64,8 @@ services:
       resources:
         limits:
           cpus: "1"
-          memory: 2G
-      replicas: 2
+          memory: 1G
+      replicas: 3
       placement:
         constraints: [node.role == worker]
       update_config:
@@ -75,7 +75,7 @@ services:
         condition: on-failure
 
   kibana:
-    image: docker.elastic.co/kibana/kibana-oss:6.3.1
+    image: docker.elastic.co/kibana/kibana-oss:6.2.2
     configs:
       - source: kibanaconfig
         target: /usr/share/kibana/config/kibana.yml
@@ -89,8 +89,8 @@ services:
       resources:
         limits:
           cpus: "2"
-          memory: 2G
-      replicas: 1
+          memory: 1G
+      replicas: 2
       placement:
         constraints: [node.role == worker]
       update_config:
@@ -101,13 +101,11 @@ services:
 
 
   grafana:
-#    image: grafana/grafana:5.0.4
-    image: 127.0.0.1:5001/grafana
-    build: grafana/
+    image: grafana/grafana:5.2.1
     ports:
-      - 3000:3000
+      - 3002:3000
     volumes:
-      -  grafanadata:/var/lib/grafana
+      -  /mnt/il060-samba-share/grafanadata:/var/lib/grafana
     networks:
       - datastore
     depends_on:
@@ -115,16 +113,17 @@ services:
     environment:
       GF_SECURITY_ADMIN_PASSWORD: admin
       ELASTICSEARCH_ENDPOINT: http://elasticsearch:9200
-# commented out because we don't use it via proxy
-#      GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s/grafana/"
+      GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s/grafana/"
+#      ELASTICSEARCH_USER: ${ES_USERNAME}
+#      ELASTICSEARCH_PASSWORD: ${ES_PASSWORD}
     deploy:
       resources:
         limits:
           cpus: "2"
-          memory: 5G
+          memory: 3G
       replicas: 1
       placement:
-        constraints: [node.role == manager]
+        constraints: [node.role == worker]
       update_config:
         parallelism: 1
         delay: 10s
@@ -132,30 +131,30 @@ services:
        condition: on-failure
 
 
-## https://github.com/jupyter/docker-stacks/tree/master/all-spark-notebook
-#  jupyter:
-#    image: 127.0.0.1:5001/jupyter
-#    build: jupyter/
-#    ports:
-#      - 8888:8888
-#    volumes:
-#      - /mnt/il060-samba-share/jupyter_notebooks/testing:/home/jovyan/work/testing
-##      - jupyterdata:/home/jovyan/work
-#    networks:
-#      - datastore
-#    deploy:
-#      placement:
-#        constraints: [node.role == worker]
-##      resources:
-##        limits:
-##          cpus: "1"
-##          memory: 8G
-#      replicas: 1
-#      update_config:
-#        parallelism: 2
-#        delay: 10s
-#      restart_policy:
-#        condition: on-failure
+# https://github.com/jupyter/docker-stacks/tree/master/all-spark-notebook
+  jupyter: 
+    image: 127.0.0.1:5001/jupyter
+    build: jupyter/
+    ports:
+      - 8888:8888
+    volumes:
+      - /mnt/il060-samba-share/jupyter_notebooks/testing:/home/jovyan/work/testing
+#      - jupyterdata:/home/jovyan/work 
+    networks:
+      - datastore
+    deploy:
+      placement:
+        constraints: [node.role == worker]
+#      resources:
+#        limits:
+#          cpus: "1"
+#          memory: 8G
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
 
 
 
@@ -183,4 +182,5 @@ configs:
     file: logstash/config/logstash.yml
   lspipeline:
     file: logstash/pipeline/logstash.conf
+
 

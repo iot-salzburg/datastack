@@ -105,4 +105,5 @@ venv.bak/
 
 .idea/
 
-datastack-adapter/Dockerfile.save
+datastack-adapter/Dockerfile.save*
+elasticStack/docker-compose.yml.save*

@@ -27,7 +27,7 @@ RUN mkdir /src
 ADD . /src
 
 # setup proper configuration
-ENV PYTHONPATH /src/WP5-lifecycle-mgmt
+ENV PYTHONPATH /src/panta_rhei
 WORKDIR /src
 
-ENTRYPOINT ["python", "/src/WP5-lifecycle-mgmt/demo_applications/datastore/datastore_adapter/datastore_adapter.py"]
+ENTRYPOINT ["python", "/src/panta_rhei/demo_applications/datastore/datastore_adapter/datastore_adapter.py"]
