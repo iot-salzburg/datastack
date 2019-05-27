@@ -26,8 +26,12 @@ RUN pip install -r requirements.txt
 RUN mkdir /src
 ADD . /src
 
+RUN git clone https://github.com/iot-salzburg/panta_rhei /src/panta_rhei > /dev/null 2>&1 || echo "Repo already exists" && \
+    git -C /src/panta_rhei/ checkout srfg-digitaltwin && \
+    git -C /src/panta_rhei/ pull
+
 # setup proper configuration
-ENV PYTHONPATH /src/panta_rhei
+ENV PYTHONPATH /src/
 WORKDIR /src
 
 # ENTRYPOINT ["python", "/src/panta_rhei/demo_applications/datastore/datastore_adapter/datastore_adapter.py"]

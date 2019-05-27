@@ -1,4 +1,3 @@
-paho-mqtt==1.4.0
 pytz
 datetime
 requests

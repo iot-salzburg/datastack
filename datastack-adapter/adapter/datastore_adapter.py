@@ -18,11 +18,18 @@ import logging
 from logstash import TCPLogstashHandler
 
 # Append path of client to pythonpath in order to import the client from cli
-sys.path.append(os.getcwd())
-from client.digital_twin_client import DigitalTwinClient
+sys.path.append("/src/panta_rhei/")  # Needed in docker
+from panta_rhei.client.digital_twin_client import DigitalTwinClient
 
 # Logstash host
-datastore_host = "192.168.48.71"
+datastore_host = os.environ.get("LOGSTASH_HOST", "localhost")  # "192.168.48.71"
+
+# Panta Rhei configuration
+CLIENT_NAME = os.environ.get("CLIENT_NAME", "db-adapter")
+SYSTEM_NAME = os.environ.get("SYSTEM_NAME", "test-topic")  # "at.srfg.iot.dtz"
+SENSORTHINGS_HOST = os.environ.get("SENSORTHINGS_HOST", "192.168.48.71:8082")
+BOOTSTRAP_SERVERS = os.environ.get("BOOTSTRAP_SERVERS", "192.168.48.71:9092,192.168.48.72:9092,192.168.48.73:9092,192.168.48.74:9092,192.168.48.75:9092")
+
 
 # Get dirname from inspect module
 filename = inspect.getframeinfo(inspect.currentframe()).filename
@@ -31,10 +38,10 @@ dirname = os.path.dirname(os.path.abspath(filename))
 SUBSCRIPTIONS = os.path.join(dirname, "subscriptions.json")
 
 # Set the configs, create a new Digital Twin Instance and register file structure
-config = {"client_name": "datastore-adapter",
-          "system": "at.srfg.iot.dtz",
-          "kafka_bootstrap_servers": "192.168.48.71:9092,192.168.48.72:9092,192.168.48.73:9092,192.168.48.74:9092,192.168.48.75:9092",
-          "gost_servers": "192.168.48.71:8082"}
+config = {"client_name": CLIENT_NAME,
+          "system": SYSTEM_NAME,
+          "kafka_bootstrap_servers": BOOTSTRAP_SERVERS,
+          "gost_servers": SENSORTHINGS_HOST}
 client = DigitalTwinClient(**config)
 # client.register(instance_file=INSTANCES)
 client.subscribe(subscription_file=SUBSCRIPTIONS)
@@ -75,6 +82,8 @@ try:
             # send to logstash
             # print("Received new data: {}".format(json.dumps(data, indent=2)))
             logger_metric.info('', extra=data)
+
+        # TODO also send logging messages
 
 except KeyboardInterrupt:
     client.disconnect()

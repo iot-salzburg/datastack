@@ -4,8 +4,14 @@ services:
   datastore-adapter:
     image: 127.0.0.1:5001/datastore-adapter
     build: .
-#    networks:
-#      - datastore-adapter
+    environment:
+      # Datastack configuration
+      LOGSTASH_HOST: "192.168.48.71"
+      # Panta Rhei configuration
+      CLIENT_NAME: "datastore-adapter"
+      SYSTEM_NAME: "at.srfg.iot.dtz"
+      SENSORTHINGS_HOST: "192.168.48.71:8082"
+      BOOTSTRAP_SERVERS: "192.168.48.71:9092,192.168.48.72:9092,192.168.48.73:9092,192.168.48.74:9092,192.168.48.75:9092"
     deploy:
       placement:
         constraints: [node.role == worker]
@@ -19,7 +25,3 @@ services:
         delay: 10s
       restart_policy:
         condition: on-failure
-
-# Network
-#networks:
-#  datastore-adapter:
