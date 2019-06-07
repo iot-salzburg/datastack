@@ -16,6 +16,20 @@
 "at.srfg.iot.dtz.panda.End Effector z-Position",
 "at.srfg.iot.dtz.panda.End Effector y-Position",
 "at.srfg.iot.dtz.panda.End Effector x-Position",
-"at.srfg.iot.dtz.panda.End Effector vertical Force"
+"at.srfg.iot.dtz.panda.End Effector vertical Force",
+
+"at.srfg.iot.dtz.conveyor_belt.Conveyor Belt Position",
+"at.srfg.iot.dtz.conveyor_belt.Conveyor Belt State",
+"at.srfg.iot.dtz.panda.Robot X-Vibration",
+"at.srfg.iot.dtz.panda.Robot Y-Vibration",
+"at.srfg.iot.dtz.shelf.Shelf Status 1",
+"at.srfg.iot.dtz.shelf.Shelf Status 2",
+"at.srfg.iot.dtz.shelf.Shelf Status 3",
+"at.srfg.iot.dtz.shelf.Shelf Status 4",
+"at.srfg.iot.dtz.shelf.Shelf Status 5",
+"at.srfg.iot.dtz.shelf.Shelf Status 6",
+"at.srfg.iot.dtz.shelf.Shelf Status 7",
+"at.srfg.iot.dtz.shelf.Shelf Status 8",
+"at.srfg.iot.dtz.shelf.Shelf Status 9"
   ]
 }
