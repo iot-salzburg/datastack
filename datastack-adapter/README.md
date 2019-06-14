@@ -2,7 +2,7 @@
 
 #### This is the adapter between the [Panta Rhei](https://github.com/iot-salzburg/panta_rhei) messaging system and the [Datastack](https://github.com/iot-salzburg/dtz_datastack/tree/master/elasticStack).
 
-The adapter is based on the Digital Twin client.
+The adapter is based on the Digital Twin client which allows the multi-tenant streaming of data easily.
 
 ```python3
 from client.digital_twin_client import DigitalTwinClient
