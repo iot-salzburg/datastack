@@ -1,5 +1,4 @@
 # Copyright (c) Salzburg Research
-
 FROM jupyter/all-spark-notebook:6c3390a9292e
 LABEL maintainer="Christoph Schranz <iotlab@salzburgresarch.at>"
 
@@ -28,6 +27,10 @@ RUN set -ex \
  && rm -rf /home/$NB_USER/.local \
  && fix-permissions $CONDA_DIR \
  && fix-permissions /home/$NB_USER
+
+RUN jupyter labextension install @jupyterlab/github
+RUN jupyter labextension install jupyterlab-drawio
+
 
 # Change jupyter_notebook_config.py
 COPY jupyter_notebook_config.json /home/jovyan/.jupyter/jupyter_notebook_config.json

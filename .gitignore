@@ -108,3 +108,6 @@ venv.bak/
 datastack-adapter/Dockerfile.save*
 datastack-adapter/panta_rhei
 elasticStack/docker-compose.yml.save*
+
+*.save*
+jupyter/jupyter/work
