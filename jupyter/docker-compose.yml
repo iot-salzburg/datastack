@@ -7,6 +7,7 @@ services:
     build: jupyter/
     ports:
       - 8888:8888
+      - 4040:4040
     volumes:
 #      - /mnt/il060-samba-share/jupyter_notebooks/testing:/home/jovyan/work/testing
       - ./jupyter/work:/home/jovyan/work
