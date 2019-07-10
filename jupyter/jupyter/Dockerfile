@@ -10,15 +10,15 @@ RUN apt-get update && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
-## installing es-hadoop
-ENV PYSPARK_PYTHON /opt/conda/bin/python
+#ENV PYSPARK_PYTHON /opt/conda/bin/python
+# Install es-hadoop
 RUN apt-get update \
- && curl -sL http://central.maven.org/maven2/org/elasticsearch/elasticsearch-hadoop/6.2.1/elasticsearch-hadoop-6.2.1.jar
+ && curl -sL http://central.maven.org/maven2/org/elasticsearch/elasticsearch-hadoop/6.8.1/elasticsearch-hadoop-6.8.1.jar
 
 RUN set -ex \
  && buildDeps=' \
     elasticsearch==6.3.1 \
-    rpy2==2.9.2 \
+#    rpy2==2.9.4 \
  ' \
  && apt-get update \
  && apt-get -y upgrade \
@@ -28,12 +28,16 @@ RUN set -ex \
  && fix-permissions $CONDA_DIR \
  && fix-permissions /home/$NB_USER
 
+# Install rpy2 to share data between Python and R
+RUN conda install rpy2=2.9.4
+
 RUN jupyter labextension install @jupyterlab/github
 RUN jupyter labextension install jupyterlab-drawio
-
 
 # Change jupyter_notebook_config.py
 COPY jupyter_notebook_config.json /home/jovyan/.jupyter/jupyter_notebook_config.json
 
-USER jovyan
-
+RUN mkdir /home/$NB_USER/.local
+RUN chmod -R 755 /home/$NB_USER/.local
+RUN chown -R $NB_USER:users /home/$NB_USER/.local
+USER $NB_USER

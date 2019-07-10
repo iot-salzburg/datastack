@@ -8,18 +8,18 @@ services:
     ports:
       - 8888:8888
     volumes:
-#      - /mnt/il060-samba-share/jupyter_notebooks/testing:/home/jovyan/work/testing
-      - ./jupyter/work:/home/jovyan/work
+      - /mnt/glusterfs/dtz/datastack/jupyter/:/home/jovyan/
+#      - ./jupyter/work:/home/jovyan/work
     environment:
       JUPYTER_ENABLE_LAB: "yes"
     networks:
-      - datastore
+      - datastack
     deploy:
       placement:
         constraints: [node.role == worker]
       resources:
         limits:
-          cpus: "1"
+          cpus: "4"
           memory: 8G
       replicas: 1
       update_config:
@@ -33,5 +33,6 @@ services:
 #    driver: local
 
 networks:
-  datastore:
-
+  datastack:
+    external: 
+      name: datastack

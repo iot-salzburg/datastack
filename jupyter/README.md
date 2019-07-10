@@ -57,6 +57,12 @@ curl 127.0.0.1:5001/v2/
 This should output `{}`:
 
 
+Create a docker network
+```bash
+docker network create --driver overlay --attachable --subnet 172.40.0.0/16 datastack
+```
+
+
 ### Setting up Jupyter 
 
 Set the password in `jupyter/jupyter_notebook_config.json`. Therefore, hash your password in the form: (password)(salt) using a sha1 hash generator, e.g. [hashgenerator.de](https://hashgenerator.de/). Then update the config file as shown below:

@@ -56,6 +56,11 @@ curl 127.0.0.1:5001/v2/
 ```
 This should output `{}`:
 
+Create a shared `datastack` network in docker:
+```bash
+docker network create --driver overlay --attachable --subnet 172.40.0.0/16 datastack
+```
+
 
 ### Setting up the Elastic Stack, Jupyter and Grafana
 
