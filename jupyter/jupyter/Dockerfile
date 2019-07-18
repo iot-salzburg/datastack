@@ -28,21 +28,6 @@ RUN set -ex \
  && fix-permissions $CONDA_DIR \
  && fix-permissions /home/$NB_USER
 
-# Install rpy2 to share data between Python and R
-RUN conda install rpy2=2.9.4 plotly=4.0.0
-RUN conda install -c conda-forge ipyleaflet
-
-RUN jupyter labextension install @jupyterlab/github
-RUN jupyter labextension install jupyterlab-drawio
-RUN jupyter labextension install jupyter-leaflet
-RUN jupyter labextension install @jupyterlab/plotly-extension
-RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
-RUN jupyter nbextension enable spellchecker/main
-RUN jupyter nbextension enable codefolding/main
-
-RUN sudo apt-get install -y graphviz libgraphviz-dev \
-  && pip install graphviz==0.11
-
 # Install Julia
 # install Julia packages in /opt/julia instead of $HOME
 ENV JULIA_PKGDIR=/opt/julia
@@ -67,6 +52,23 @@ RUN julia -e 'using Pkg;Pkg.update();Pkg.add("IJulia");using IJulia'
 RUN julia -e 'using Pkg;Pkg.add("DataFrames");Pkg.add("Gadfly");Pkg.add("RDatasets")'
 RUN julia -e 'using Pkg;Pkg.update();Pkg.add("Clustering")'
 RUN julia -e 'using IJulia'
+
+
+# Install rpy2 to share data between Python and R
+RUN conda install rpy2=2.9.4 plotly=4.0.0
+RUN conda install -c conda-forge ipyleaflet
+
+RUN jupyter labextension install @jupyterlab/github
+RUN jupyter labextension install jupyterlab-drawio
+RUN jupyter labextension install jupyter-leaflet
+RUN jupyter labextension install @jupyterlab/plotly-extension
+RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
+RUN jupyter nbextension enable spellchecker/main
+RUN jupyter nbextension enable codefolding/main
+
+RUN sudo apt-get install -y graphviz libgraphviz-dev \
+  && pip install graphviz==0.11
+
 
 RUN mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
     chmod -R go+rx $CONDA_DIR/share/jupyter && \
