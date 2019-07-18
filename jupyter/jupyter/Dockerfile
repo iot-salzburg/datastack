@@ -53,6 +53,12 @@ RUN julia -e 'using Pkg;Pkg.add("DataFrames");Pkg.add("Gadfly");Pkg.add("RDatase
 RUN julia -e 'using Pkg;Pkg.update();Pkg.add("Clustering")'
 RUN julia -e 'using IJulia'
 
+RUN mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
+    chmod -R go+rx $CONDA_DIR/share/jupyter && \
+    fix-permissions $JULIA_PKGDIR $CONDA_DIR/share/jupyter && \
+    chown -R  $NB_USER /home/$NB_USER && \
+    chmod -R 755 /home/$NB_USER/.julia
+
 
 # Install rpy2 to share data between Python and R
 RUN conda install rpy2=2.9.4 plotly=4.0.0
@@ -68,13 +74,6 @@ RUN jupyter nbextension enable codefolding/main
 
 RUN sudo apt-get install -y graphviz libgraphviz-dev \
   && pip install graphviz==0.11
-
-
-RUN mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
-    chmod -R go+rx $CONDA_DIR/share/jupyter && \
-    fix-permissions $JULIA_PKGDIR $CONDA_DIR/share/jupyter && \
-    chown -R  $NB_USER /home/$NB_USER && \
-    chmod -R 755 /home/$NB_USER/.julia
 
 # Change jupyter_notebook_config.py
 COPY jupyter_notebook_config.json /home/jovyan/.jupyter/jupyter_notebook_config.json
