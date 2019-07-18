@@ -72,17 +72,11 @@ RUN sudo apt-get install -y graphviz libgraphviz-dev \
 
 RUN mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
     chmod -R go+rx $CONDA_DIR/share/jupyter && \
-    rm -rf $HOME/.local && \
     fix-permissions $JULIA_PKGDIR $CONDA_DIR/share/jupyter && \
-    chown -R  $NB_USER /home/$NB_USER/.julia && \
+    chown -R  $NB_USER /home/$NB_USER && \
     chmod -R 755 /home/$NB_USER/.julia
-
 
 # Change jupyter_notebook_config.py
 COPY jupyter_notebook_config.json /home/jovyan/.jupyter/jupyter_notebook_config.json
-
-RUN mkdir -p /home/$NB_USER/.local \
- && chmod -R 755 /home/$NB_USER/.local \
- && chown -R $NB_USER:users /home/$NB_USER/.local
 
 USER $NB_USER
