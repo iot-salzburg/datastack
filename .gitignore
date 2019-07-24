@@ -111,3 +111,4 @@ elasticStack/docker-compose.yml.save*
 
 *.save*
 jupyter/jupyter/work
+jupyter/jupyter/data
