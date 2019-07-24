@@ -59,7 +59,7 @@ RUN julia -e 'using IJulia'
 RUN mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
     chmod -R go+rx $CONDA_DIR/share/jupyter && \
     fix-permissions $JULIA_PKGDIR $CONDA_DIR/share/jupyter && \
-    chown -R  $NB_USER /home/$NB_USER && \
+    chown -R  $NB_USER /home/$NB_USER/.julia && \
     chmod -R 755 /home/$NB_USER/.julia
 
 # Install rpy2 to share data between Python and R
@@ -74,6 +74,10 @@ RUN jupyter labextension install @jupyterlab/plotly-extension
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
 RUN jupyter nbextension enable spellchecker/main
 RUN jupyter nbextension enable codefolding/main
+
+
+RUN chown -R $NB_USER /home/$NB_USER/.local && \
+    chmod -R 755 /home/$NB_USER/.local
 
 # Change jupyter_notebook_config.py
 COPY jupyter_notebook_config.json /home/jovyan/.jupyter/jupyter_notebook_config.json
