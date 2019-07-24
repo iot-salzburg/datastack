@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 docker-compose build
 docker-compose push
-docker stack deploy --compose-file docker-compose.yml jupyter
+docker stack deploy --compose-file swarm-docker-compose.yml jupyter

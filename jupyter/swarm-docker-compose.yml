@@ -8,16 +8,16 @@ services:
       - 8888:8888
       - 4040:4040
     volumes:
-#      - /mnt/glusterfs/dtz/datastack/jupyter/:/home/jovyan/
-      - ./jupyter/work:/home/jovyan/work
+      - /mnt/glusterfs/dtz/datastack/jupyter/:/home/jovyan/
+#      - ./jupyter/work:/home/jovyan/work
     environment:
       GRANT_SUDO: "yes"
       JUPYTER_ENABLE_LAB: "yes"
     # enable sudo permissions
     user:
       "root"
-#    networks:
-#      - datastack
+    networks:
+      - datastack
     deploy:
       placement:
         constraints: [node.role == worker]

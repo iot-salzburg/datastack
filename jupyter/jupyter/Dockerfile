@@ -28,29 +28,32 @@ RUN set -ex \
  && fix-permissions $CONDA_DIR \
  && fix-permissions /home/$NB_USER
 
+# Install Graphviz
+RUN apt-get update \
+  && apt-get install -y graphviz libgraphviz-dev \
+  && pip install --no-cache-dir graphviz==0.11
+
 # Install Julia
-# install Julia packages in /opt/julia instead of $HOME
-ENV JULIA_PKGDIR=/opt/julia
+# install Julia packages in /opt/julia-${JULIA_VERSION} instead of $HOME
 ENV JULIA_VERSION=1.1.1
+ENV JULIA_PKGDIR=/opt/julia-${JULIA_VERSION}
 RUN mkdir /opt/julia-${JULIA_VERSION} && \
     cd /tmp && \
     wget -q https://julialang-s3.julialang.org/bin/linux/x64/1.1/julia-${JULIA_VERSION}-linux-x86_64.tar.gz && \
     tar xzf julia-${JULIA_VERSION}-linux-x86_64.tar.gz -C /opt/julia-${JULIA_VERSION} --strip-components=1 && \
     rm /tmp/julia-${JULIA_VERSION}-linux-x86_64.tar.gz
-RUN ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia
+RUN ln -fs /opt/julia-${JULIA_VERSION}/bin/julia /usr/local/bin/julia
 
 # Show Julia where conda libraries are \
 RUN mkdir /etc/julia && \
     echo "push!(Libdl.DL_LOAD_PATH, \"$CONDA_DIR/lib\")" >> /etc/julia/juliarc.jl && \
-    # Create JULIA_PKGDIR \
-    mkdir -p $JULIA_PKGDIR && \
     chown -R $NB_USER $JULIA_PKGDIR && \
     fix-permissions $JULIA_PKGDIR
 
 # Add Julia packages:
-RUN julia -e 'using Pkg;Pkg.update();Pkg.add("IJulia");using IJulia'
+#RUN rm -r /home/jovyan/.julia/registries/General
+RUN julia -e 'import Pkg; using Pkg; Pkg.update();Pkg.add("IJulia")'
 RUN julia -e 'using Pkg;Pkg.add("DataFrames");Pkg.add("Gadfly");Pkg.add("RDatasets")'
-RUN julia -e 'using Pkg;Pkg.update();Pkg.add("Clustering")'
 RUN julia -e 'using IJulia'
 
 RUN mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
@@ -59,11 +62,11 @@ RUN mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernel
     chown -R  $NB_USER /home/$NB_USER && \
     chmod -R 755 /home/$NB_USER/.julia
 
-
 # Install rpy2 to share data between Python and R
 RUN conda install rpy2=2.9.4 plotly=4.0.0
 RUN conda install -c conda-forge ipyleaflet
 
+# Install various extensions
 RUN jupyter labextension install @jupyterlab/github
 RUN jupyter labextension install jupyterlab-drawio
 RUN jupyter labextension install jupyter-leaflet
@@ -71,9 +74,6 @@ RUN jupyter labextension install @jupyterlab/plotly-extension
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
 RUN jupyter nbextension enable spellchecker/main
 RUN jupyter nbextension enable codefolding/main
-
-RUN sudo apt-get install -y graphviz libgraphviz-dev \
-  && pip install graphviz==0.11
 
 # Change jupyter_notebook_config.py
 COPY jupyter_notebook_config.json /home/jovyan/.jupyter/jupyter_notebook_config.json
