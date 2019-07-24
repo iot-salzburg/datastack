@@ -11,7 +11,7 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 #ENV PYSPARK_PYTHON /opt/conda/bin/python
-# Install es-hadoop
+# Install elasticsearch libs
 RUN apt-get update \
  && curl -sL http://central.maven.org/maven2/org/elasticsearch/elasticsearch-hadoop/6.8.1/elasticsearch-hadoop-6.8.1.jar
 
