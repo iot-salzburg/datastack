@@ -4,8 +4,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.2
     volumes:
       - esdata:/usr/share/elasticsearch/data
-# Use in swarm mode
-#      - /mnt/glusterfs/dtz/datastack/elasticsearch/esbackup/:/usr/share/elasticsearch/backup
+      - /mnt/glusterfs/dtz/datastack/elasticsearch/esbackup/:/usr/share/elasticsearch/backup
     configs:
       - source: esconfig
         target: /usr/share/elasticsearch/config/elasticsearch.yml
