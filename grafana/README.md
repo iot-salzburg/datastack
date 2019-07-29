@@ -28,6 +28,14 @@ It is normal that only a ugly interface is seen here, the real UI is only access
 the Proxy. To see the real UI on localhost, comment out
  `GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s/grafana/"` in the `grafana/docker-compose.yml`.
 
+### Add a new dashboard:
+
+Add a new datasource where the url is `http://elasticsearch:9200` and test it.
+
+Add a new dashboard panel an select for example (using lucene query) 
+`Datastream.name: "Robot X-Vibration"`.
+Then a new graph should appear that can be configured.
+
 
 With these commands we can see if everything worked well:
 ```bash

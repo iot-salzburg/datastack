@@ -60,7 +60,7 @@ services:
 Test the setup using testing parameters, e.g. `LOGSTASH_HOST: "localhost"`.
 
 ```bash
-docker-compose up --build
+python3 datastack-adapter/adapter/datastore_adapter.py
 ```
 
 ## Deployment

@@ -17,8 +17,24 @@ from the [panta-rhei messaging system](https://github.com/iot-salzburg/dtz_datas
 ## Contents
 
 1. [Requirements](../README.md) (parent directory)
+1. [Configuration](#configuration)
 2. [Quickstart](#quickstart)
 2. [Deployment](#deployment)
+
+
+## Configuration
+
+Set the password in `jupyter/jupyter_notebook_config.json`. Therefore, hash your 
+password in the form: (password)(salt) using a sha1 hash generator, 
+e.g. [hashgenerator.de](https://hashgenerator.de/). Then update the config file as shown below:
+
+```json
+{
+  "NotebookApp": {
+    "password": "sha1:e49e73b0eb0e:353c38d87d79527e57da1bba5f65046d0b376d95"
+  }
+}
+```
 
 ## Quickstart
 
@@ -38,18 +54,6 @@ docker logs jupyter_jupyter_1
 
 
 ## Deployment
-
-Set the password in `jupyter/jupyter_notebook_config.json`. Therefore, hash your 
-password in the form: (password)(salt) using a sha1 hash generator, 
-e.g. [hashgenerator.de](https://hashgenerator.de/). Then update the config file as shown below:
-
-```json
-{
-  "NotebookApp": {
-    "password": "sha1:e49e73b0eb0e:353c38d87d79527e57da1bba5f65046d0b376d95"
-  }
-}
-```
 
 Running these commands will build, push and deploy the stack:
 
