@@ -18,18 +18,17 @@ import logging
 from logstash import TCPLogstashHandler
 
 # Append path of client to pythonpath in order to import the client from cli
-sys.path.append("/src/panta_rhei/")  # Needed in docker
+#sys.path.append("/src/panta_rhei/")  # Needed in docker
 from panta_rhei.client.digital_twin_client import DigitalTwinClient
 
 # Logstash host
 datastore_host = os.environ.get("LOGSTASH_HOST", "localhost")  # "192.168.48.71"
 
 # Panta Rhei configuration
-CLIENT_NAME = os.environ.get("CLIENT_NAME", "db-adapter")
-SYSTEM_NAME = os.environ.get("SYSTEM_NAME", "test-topic")  # "at.srfg.iot.dtz"
+CLIENT_NAME = os.environ.get("CLIENT_NAME", "test-adapter")
+SYSTEM_NAME = os.environ.get("SYSTEM_NAME", "at.srfg.iot.dtz")
 SENSORTHINGS_HOST = os.environ.get("SENSORTHINGS_HOST", "192.168.48.71:8082")
 BOOTSTRAP_SERVERS = os.environ.get("BOOTSTRAP_SERVERS", "192.168.48.71:9092,192.168.48.72:9092,192.168.48.73:9092,192.168.48.74:9092,192.168.48.75:9092")
-
 
 # Get dirname from inspect module
 filename = inspect.getframeinfo(inspect.currentframe()).filename

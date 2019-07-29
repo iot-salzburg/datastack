@@ -4,10 +4,8 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.2
     volumes:
       - esdata:/usr/share/elasticsearch/data
-      - /mnt/glusterfs/dtz/datastack/elasticsearch/esbackup/:/usr/share/elasticsearch/backup
-#      - /mnt/il060-samba-share/esbackup:/usr/share/elasticsearch/backup
-#      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-#      - ./elasticsearch/config/log4j2.properties:/usr/share/elasticsearch/config/log4j2.properties:ro
+# Use in swarm mode
+#      - /mnt/glusterfs/dtz/datastack/elasticsearch/esbackup/:/usr/share/elasticsearch/backup
     configs:
       - source: esconfig
         target: /usr/share/elasticsearch/config/elasticsearch.yml
@@ -24,6 +22,7 @@ services:
       timeout: 10s
       retries: 3
     networks:
+      - default
       - datastack
     deploy:
       placement:
@@ -39,7 +38,6 @@ services:
       restart_policy:
         condition: on-failure
 
-
   logstash:
     image: docker.elastic.co/logstash/logstash-oss:6.2.2
     configs:
@@ -53,6 +51,7 @@ services:
     environment:
       LS_JAVA_OPTS: "-Xmx512m -Xms512m"
     networks:
+      - default
       - datastack
     depends_on:
       - elasticsearch
@@ -78,6 +77,7 @@ services:
     ports:
       - "5601:5601"
     networks:
+      - default
       - datastack
     depends_on:
       - elasticsearch
@@ -95,81 +95,16 @@ services:
       restart_policy:
        condition: on-failure
 
-
-  grafana:
-#    image: grafana/grafana:5.0.4
-    image: 127.0.0.1:5001/grafana
-    build: grafana/
-    ports:
-      - 3000:3000
-    volumes:
-      -  /mnt/glusterfs/dtz/datastack/grafanadata:/var/lib/grafana
-    networks:
-      - datastack
-    depends_on:
-      - elasticsearch
-    environment:
-      GF_SECURITY_ADMIN_PASSWORD: admin
-      ELASTICSEARCH_ENDPOINT: http://elasticsearch:9200
-      GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s/grafana/"
-#      ELASTICSEARCH_USER: ${ES_USERNAME}
-#      ELASTICSEARCH_PASSWORD: ${ES_PASSWORD}
-    deploy:
-      resources:
-        limits:
-          cpus: "2"
-          memory: 3G
-      replicas: 1
-      placement:
-        constraints: [node.role == manager]
-      update_config:
-        parallelism: 1
-        delay: 10s
-      restart_policy:
-       condition: on-failure
-
-
-## https://github.com/jupyter/docker-stacks/tree/master/all-spark-notebook
-#  jupyter:
-#    image: 127.0.0.1:5001/jupyter
-#    build: jupyter/
-#    ports:
-#      - 8888:8888
-#    volumes:
-#      - /mnt/il060-samba-share/jupyter_notebooks/testing:/home/jovyan/work/testing
-##      - jupyterdata:/home/jovyan/work
-#    networks:
-#      - datastore
-#    deploy:
-#      placement:
-#        constraints: [node.role == worker]
-##      resources:
-##        limits:
-##          cpus: "1"
-##          memory: 8G
-#      replicas: 1
-#      update_config:
-#        parallelism: 2
-#        delay: 10s
-#      restart_policy:
-#        condition: on-failure
-
-
-
 volumes:
   esdata:
     driver: local
   pipeline:
     driver: local
-  grafanadata:
-    driver: local
-#  jupyterdata:
-#    driver: local
 
 networks:
   datastack:
-    external:
-      name: datastack
+    driver: overlay
+    attachable: true
 
 configs:
   esconfig:

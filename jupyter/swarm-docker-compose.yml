@@ -3,7 +3,7 @@ services:
 # https://github.com/jupyter/docker-stacks/tree/master/all-spark-notebook
   jupyter:
     image: 127.0.0.1:5001/jupyter
-    build: jupyter/
+    build: src/
     ports:
       - 8888:8888
       - 4040:4040

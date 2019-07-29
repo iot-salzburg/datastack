@@ -3,7 +3,7 @@ services:
 # https://github.com/jupyter/docker-stacks/tree/master/all-spark-notebook
   jupyter:
     image: 127.0.0.1:5001/jupyter
-    build: jupyter/
+    build: src/
     ports:
       - 8888:8888
       - 4040:4040
@@ -16,8 +16,9 @@ services:
     # enable sudo permissions
     user:
       "root"
-#    networks:
-#      - datastack
+    networks:
+      - default
+      - elasticstack_datastack
     deploy:
       placement:
         constraints: [node.role == worker]
@@ -33,6 +34,6 @@ services:
         condition: on-failure
 
 networks:
-  datastack:
+  elasticstack_datastack:
     external:
-      name: datastack
+      name: elasticstack_datastack

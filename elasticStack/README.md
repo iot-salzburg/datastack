@@ -61,6 +61,16 @@ Create a shared `datastack` network in docker:
 docker network create --driver overlay --attachable --subnet 172.40.0.0/16 datastack
 ```
 
+The `vm.max_map_count` setting should be set permanently 
+in `/etc/sysctl.conf`:
+```bash
+grep vm.max_map_count /etc/sysctl.conf
+# -> vm.max_map_count=262144
+
+# or set it temporarily 
+sysctl -w vm.max_map_count=262144
+```
+
 
 ### Setting up the Elastic Stack, Jupyter and Grafana
 

@@ -36,8 +36,9 @@ This is an instruction on how to set up a demo scenario on your own hardware.
 Here, we use Ubuntu 18.04.
 
 ```bash
-https://github.com/iot-salzburg/dtz_datastack.git
+git clone https://github.com/iot-salzburg/dtz_datastack.git
 cd git_datastack/datastack-adapter
+git clone https://github.com/iot-salzburg/panta_rhei.git adapter/panta_rhei
 ```
 
 Configure the adapter in the `docker-compose.yml`:

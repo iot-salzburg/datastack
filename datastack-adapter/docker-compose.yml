@@ -4,6 +4,8 @@ services:
   datastore-adapter:
     image: 127.0.0.1:5001/datastore-adapter
     build: .
+    networks:
+      - elasticstack_datastack
     environment:
       # Datastack configuration
       LOGSTASH_HOST: "192.168.48.71"
@@ -25,3 +27,8 @@ services:
         delay: 10s
       restart_policy:
         condition: on-failure
+
+networks:
+  elasticstack_datastack:
+    external:
+      name: elasticstack_datastack

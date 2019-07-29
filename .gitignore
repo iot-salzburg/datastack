@@ -110,5 +110,9 @@ datastack-adapter/panta_rhei
 elasticStack/docker-compose.yml.save*
 
 *.save*
-jupyter/jupyter/work
-jupyter/jupyter/data
+jupyter/src/work
+jupyter/src/data
+grafana/grafanadata
+/elasticStack/elasticsearch/esdata/
+/datastack-adapter/adapter/panta_rhei/
+
