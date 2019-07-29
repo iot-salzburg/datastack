@@ -3,13 +3,13 @@ services:
 # https://github.com/jupyter/docker-stacks/tree/master/all-spark-notebook
   jupyter:
     image: 127.0.0.1:5001/jupyter
-    build: src/
+    build: ./src/
     ports:
       - 8888:8888
       - 4040:4040
     volumes:
-#      - /mnt/glusterfs/dtz/datastack/jupyter/:/home/jovyan/
-      - ./jupyter/data:/home/jovyan/work
+      - /mnt/glusterfs/dtz/datastack/jupyter/:/home/jovyan/
+#      - ./jupyter/data:/home/jovyan/work
     environment:
       GRANT_SUDO: "yes"
       JUPYTER_ENABLE_LAB: "yes"
@@ -18,7 +18,7 @@ services:
       "root"
     networks:
       - default
-      - elasticstack_datastack
+      - elk_datastack
     deploy:
       placement:
         constraints: [node.role == worker]
@@ -34,6 +34,6 @@ services:
         condition: on-failure
 
 networks:
-  elasticstack_datastack:
+  elk_datastack:
     external:
-      name: elasticstack_datastack
+      name: elk_datastack

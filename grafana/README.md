@@ -50,11 +50,11 @@ Running these commands will build, push and deploy the stack:
 **Check if the paths in 'docker-compose.yml' do exist and are syncronized!**
 
 ```bash
-./grafana/start_stack.sh
+./grafana/start_grafana.sh
 ```
 
 With these commands we can see if everything worked well:
 ```bash
-./grafana/show_stack.sh
+./grafana/show_grafana.sh
 docker service ps grafana_grafana
 ```

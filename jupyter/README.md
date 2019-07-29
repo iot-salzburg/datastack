@@ -60,12 +60,12 @@ Running these commands will build, push and deploy the stack:
 **Check if the paths in 'docker-compose.yml' do exist and are syncronized!**
 
 ```bash
-./jupyter/start_stack.sh
+./jupyter/start_jupyter.sh
 ```
 
 With these commands we can see if everything worked well:
 ```bash
-./jupyter/show_stack.sh
+./jupyter/show_jupyter.sh
 docker service ps jupyter_jupyter
 ```
 
