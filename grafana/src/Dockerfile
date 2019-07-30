@@ -12,10 +12,6 @@ RUN chown -R root:root /etc/grafana && \
   chown -R grafana:grafana /var/lib/grafana && \
   chown -R grafana:grafana /usr/share/grafana
 
-ARG DBINDEX
-
-USER grafana
-
 RUN grafana-cli plugins install grafana-worldmap-panel \
  && grafana-cli plugins install natel-plotly-panel\
  && grafana-cli plugins install grafana-piechart-panel\
@@ -23,8 +19,10 @@ RUN grafana-cli plugins install grafana-worldmap-panel \
 
 ADD ./provisioning /etc/grafana/provisioning
 ADD ./config.ini /etc/grafana/config.ini
+#RUN mkdir -p /dashboards
+#ADD ../grafanadata/dashboards /dashboards
 
-USER root
+ARG DBINDEX
 
 ENTRYPOINT envsubst < /etc/grafana/provisioning/datasources/all.yml > /etc/grafana/provisioning/datasources/all.yml \
   && su grafana \

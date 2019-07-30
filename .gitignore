@@ -113,7 +113,6 @@ elasticStack/docker-compose.yml.save*
 jupyter/src/work
 jupyter/src/data
 grafana/grafanadata
+!grafana/grafanadata/dashboards
 /elasticStack/elasticsearch/esdata/
-/datastack-adapter/adapter/panta_rhei/
-
 /datastack-adapter/adapter/panta_rhei/
