@@ -20,8 +20,10 @@ RUN grafana-cli plugins install grafana-worldmap-panel \
 ADD ./provisioning /etc/grafana/provisioning
 ADD ./config.ini /etc/grafana/config.ini
 
-ARG DBINDEX
+ARG DBINDEX1
+ARG DBINDEX2
 
-ENTRYPOINT envsubst < /etc/grafana/provisioning/datasources/all.yml > /etc/grafana/provisioning/datasources/all.yml \
+ENTRYPOINT envsubst < /etc/grafana/provisioning/datasources/source1.yml > /etc/grafana/provisioning/datasources/source1.yml \
+  && envsubst < /etc/grafana/provisioning/datasources/source2.yml > /etc/grafana/provisioning/datasources/source2.yml \
   && su grafana \
   && sh /run.sh

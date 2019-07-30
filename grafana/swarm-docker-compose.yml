@@ -18,7 +18,8 @@ services:
 #      ELASTICSEARCH_USER: ${ES_USERNAME}
 #      ELASTICSEARCH_PASSWORD: ${ES_PASSWORD}
       GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-simple-json-datasource
-      DBINDEX: "[eu.dtz.data-]YYYY.MM"
+      DBINDEX1: "[eu.dtz.data-]YYYY.MM"
+      DBINDEX2: "[nimble-]YYYY.MM"
     deploy:
       resources:
         limits:
