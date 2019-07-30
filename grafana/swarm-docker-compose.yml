@@ -6,20 +6,18 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./grafanadata:/var/lib/grafana
-#      - /mnt/glusterfs/dtz/datastack/grafanadata:/var/lib/grafana
+#      - grafanadata:/var/lib/grafana
+      - /mnt/glusterfs/dtz/datastack/grafanadata:/var/lib/grafana
     networks:
       - default
-      - elasticstack_datastack
+      - elk_datastack
     environment:
       GF_SECURITY_ADMIN_PASSWORD: admin
       ELASTICSEARCH_ENDPOINT: http://elasticsearch:9200
-#      GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s/grafana/"
+      GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s/grafana/"
 #      ELASTICSEARCH_USER: ${ES_USERNAME}
 #      ELASTICSEARCH_PASSWORD: ${ES_PASSWORD}
       GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-simple-json-datasource
-      DBINDEX: "[nimble-]YYYY.MM"
-#    command: "envsubst < /etc/grafana/provisioning/datasources/all.yml > /etc/grafana/provisioning/datasources/all.yml"
     deploy:
       resources:
         limits:
@@ -34,7 +32,11 @@ services:
       restart_policy:
        condition: on-failure
 
+volumes:
+  grafanadata:
+    driver: local
+
 networks:
-  elasticstack_datastack:
+  elk_datastack:
     external:
-      name: elasticstack_datastack
+      name: elk_datastack

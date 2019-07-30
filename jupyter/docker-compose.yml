@@ -8,8 +8,8 @@ services:
       - 8888:8888
       - 4040:4040
     volumes:
-      - /mnt/glusterfs/dtz/datastack/jupyter/:/home/jovyan/
-#      - ./jupyter/data:/home/jovyan/work
+#      - /mnt/glusterfs/dtz/datastack/jupyter/:/home/jovyan/
+      - ./src/data:/home/jovyan/work
     environment:
       GRANT_SUDO: "yes"
       JUPYTER_ENABLE_LAB: "yes"
