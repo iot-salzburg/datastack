@@ -19,8 +19,6 @@ RUN grafana-cli plugins install grafana-worldmap-panel \
 
 ADD ./provisioning /etc/grafana/provisioning
 ADD ./config.ini /etc/grafana/config.ini
-#RUN mkdir -p /dashboards
-#ADD ../grafanadata/dashboards /dashboards
 
 ARG DBINDEX
 
