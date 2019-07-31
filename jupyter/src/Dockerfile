@@ -7,10 +7,8 @@ USER root
 # Pre-requisites
 RUN apt-get update && \
   apt-get install -y --no-install-recommends \
-    fonts-dejavu \
-    gfortran \
-    gcc && \
-  git apt-utils wget python-pip unzip && \
+    fonts-dejavu gfortran gcc \
+    git apt-utils wget python-pip unzip && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
