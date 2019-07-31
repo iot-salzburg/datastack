@@ -8,17 +8,17 @@ services:
       - 8888:8888
       - 4040:4040
     volumes:
-#      - /mnt/glusterfs/dtz/datastack/jupyter/:/home/jovyan/
-      - ./src/data:/home/jovyan/work
+      - /mnt/glusterfs/dtz/datastack/jupyter/:/home/jovyan/
+#      - ./src/data:/home/jovyan/work
     environment:
       GRANT_SUDO: "yes"
       JUPYTER_ENABLE_LAB: "yes"
     # enable sudo permissions
     user:
       "root"
-#    networks:
-#      - default
-#      - elk_datastack
+    networks:
+      - default
+      - elk_datastack
     deploy:
       placement:
         constraints: [node.role == worker]
@@ -33,7 +33,7 @@ services:
       restart_policy:
         condition: on-failure
 
-#networks:
-#  elk_datastack:
-#    external:
-#      name: elk_datastack
+networks:
+  elk_datastack:
+    external:
+      name: elk_datastack
