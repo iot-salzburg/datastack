@@ -17,13 +17,15 @@ RUN grafana-cli plugins install grafana-worldmap-panel \
  && grafana-cli plugins install grafana-piechart-panel\
  && grafana-cli plugins install grafana-simple-json-datasource
 
-ADD ./provisioning /etc/grafana/provisioning
+# ADD ./provisioning /etc/grafana/provisioning
 ADD ./config.ini /etc/grafana/config.ini
 
-ARG DBINDEX1
-ARG DBINDEX2
+#ARG DBINDEX1
+#ARG DBINDEX2
 
-ENTRYPOINT envsubst < /etc/grafana/provisioning/datasources/source1.yml > /etc/grafana/provisioning/datasources/source1.yml \
-  && envsubst < /etc/grafana/provisioning/datasources/source2.yml > /etc/grafana/provisioning/datasources/source2.yml \
-  && su grafana \
-  && sh /run.sh
+#ENTRYPOINT envsubst < /etc/grafana/provisioning/datasources/source1.yml > /etc/grafana/provisioning/datasources/source1.yml \
+#  && envsubst < /etc/grafana/provisioning/datasources/source2.yml > /etc/grafana/provisioning/datasources/source2.yml \
+#  && su grafana \
+#  && sh /run.sh
+
+ENTRYPOINT su grafana && sh /run.sh
