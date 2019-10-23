@@ -13,8 +13,8 @@ RUN chown -R root:root /etc/grafana && \
   chown -R grafana:grafana /usr/share/grafana
 
 RUN grafana-cli plugins install grafana-worldmap-panel \
- && grafana-cli plugins install natel-plotly-panel\
- && grafana-cli plugins install grafana-piechart-panel\
+ && grafana-cli plugins install natel-plotly-panel \
+ && grafana-cli plugins install grafana-piechart-panel \
  && grafana-cli plugins install grafana-simple-json-datasource
 
 # ADD ./provisioning /etc/grafana/provisioning
