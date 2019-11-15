@@ -183,6 +183,11 @@ sudo docker ps
 Remove redundant docker installations
 
 
+#### curl 127.0.0.1:5001/v2/ gives no response
+
+If `192.168.48.XX:5001/v2/` works when `XX` is another node, then a restart fixed the problem. Maybe also a docker restart works.
+
+
 #### "entire heap max virtual memory areas vm.max_map_count [...] likely too low, increase to at least [262144]"
 
 Run on host machine:
