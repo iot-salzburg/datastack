@@ -1,6 +1,8 @@
 # Jupyter Stack
 #### Analytics and Data Science Notebook for the Datastack
 
+***A GPU-based and fully compatible Jupyterlab version is available at [iot-salzburg/gpu-jupyter](https://github.com/iot-salzburg/gpu-jupyter), that is preferred in the case that a NIVDIA GPU is availalbe. However, this version will also work.***
+
 This part can be used standalone. If the ElasticStack is running, its data can be fetched.
 
 * [Spark 2.1.1](http://spark.apache.org/docs/2.1.1)
