@@ -36,7 +36,7 @@ from the [panta-rhei messaging system](https://github.com/iot-salzburg/dtz_datas
 2. Install [Docker Compose](https://docs.docker.com/compose/install/) version **1.6.0+**
 3. Setting up a [Docker Swarm](https://www.youtube.com/watch?v=x843GyFRIIY) on a cluster. **(optional)**.
 
-    If not already done, start a registry instance to make the cumstomized jupyter-image
+    If not already done, start a registry instance to make the cumstomized images
     deployable: (we are using port 5001, as logstash's default port is 5000)
     
     ```bash
