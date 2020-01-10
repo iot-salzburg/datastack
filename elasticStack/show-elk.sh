@@ -4,3 +4,4 @@ docker service ls | grep elk
 echo ""
 echo "Printing 'docker stack ps elk':"
 docker stack ps elk | grep Running
+docker stack ps elk | grep -v Running

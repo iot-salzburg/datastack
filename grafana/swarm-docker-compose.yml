@@ -6,8 +6,8 @@ services:
     ports:
       - 3000:3000
     volumes:
-#      - grafanadata:/var/lib/grafana
-      - /mnt/glusterfs/dtz/datastack/grafanadata:/var/lib/grafana
+      - grafanadata:/var/lib/grafana
+#      - /mnt/glusterfs/dtz/datastack/grafanadata:/var/lib/grafana
     networks:
       - default
       - elk_datastack
@@ -27,7 +27,7 @@ services:
           memory: 3G
       replicas: 1
       placement:
-        constraints: [node.role == manager]
+        constraints: [node.hostname == il072]
       update_config:
         parallelism: 1
         delay: 10s
