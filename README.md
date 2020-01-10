@@ -36,7 +36,7 @@ from the [panta-rhei messaging system](https://github.com/iot-salzburg/dtz_datas
 2. Install [Docker Compose](https://docs.docker.com/compose/install/) version **1.6.0+**
 3. Setting up a [Docker Swarm](https://www.youtube.com/watch?v=x843GyFRIIY) on a cluster. **(optional)**.
 
-    If not already done, start a registry instance to make the cumstomized jupyter-image
+    If not already done, start a registry instance to make the cumstomized images
     deployable: (we are using port 5001, as logstash's default port is 5000)
     
     ```bash
@@ -181,6 +181,11 @@ sudo docker ps
 #### errors while removing docker containers:
 
 Remove redundant docker installations
+
+
+#### curl 127.0.0.1:5001/v2/ gives no response
+
+If `192.168.48.XX:5001/v2/` works when `XX` is another node, then a restart fixed the problem. Maybe also a docker restart works.
 
 
 #### "entire heap max virtual memory areas vm.max_map_count [...] likely too low, increase to at least [262144]"
