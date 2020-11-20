@@ -8,16 +8,16 @@ services:
       - elk_datastack
     environment:
       # Datastack configuration
-      LOGSTASH_HOST: "192.168.48.72"
+      LOGSTASH_HOST: "192.168.48.71"
       # Panta Rhei configuration
       CLIENT_NAME: "datastore-adapter"
       SYSTEM_NAME: "at.srfg.iot.dtz"
-      SENSORTHINGS_HOST: "192.168.48.72:8082"
+      SENSORTHINGS_HOST: "192.168.48.71:8082"
 #      BOOTSTRAP_SERVERS: "192.168.48.71:9092,192.168.48.72:9092,192.168.48.73:9092,192.168.48.74:9092,192.168.48.75:9092"
-      BOOTSTRAP_SERVERS: "192.168.48.72:9092,192.168.48.73:9092,192.168.48.74:9092,192.168.48.75:9092"
+      BOOTSTRAP_SERVERS: "192.168.48.71:9092"
     deploy:
-      placement:
-        constraints: [node.role == worker]
+#      placement:
+#        constraints: [node.role == worker]
       resources:
         limits:
           cpus: "1"

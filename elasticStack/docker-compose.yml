@@ -24,13 +24,13 @@ services:
       - default
       - datastack
     deploy:
-      placement:
-        constraints: [node.role == worker]
+#      placement:
+#        constraints: [node.role == worker]
       resources:
         limits:
           cpus: "3"
-          memory: 10G
-      replicas: 3
+          memory: 6G
+      replicas: 2
       update_config:
         parallelism: 2
         delay: 10s
@@ -42,8 +42,8 @@ services:
     configs:
       - source: lsconfig
         target: /usr/share/logstash/config/logstash.yml
-    volumes:
-      - ./logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+#    volumes:
+#      - ./logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
     ports:
       - "5000:5000"
       - "9600:9600"
@@ -59,9 +59,9 @@ services:
         limits:
           cpus: "1"
           memory: 1G
-      replicas: 3
-      placement:
-        constraints: [node.role == worker]
+      replicas: 2
+#      placement:
+#        constraints: [node.role == worker]
       update_config:
         parallelism: 2
         delay: 10s
@@ -85,9 +85,9 @@ services:
         limits:
           cpus: "2"
           memory: 1G
-      replicas: 2
-      placement:
-        constraints: [node.role == worker]
+      replicas: 1
+#      placement:
+#        constraints: [node.role == worker]
       update_config:
         parallelism: 1
         delay: 10s
