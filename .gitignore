@@ -118,3 +118,5 @@ grafana/grafanadata
 /elastic-adapter/adapter/panta_rhei/
 /InfluxDB_Grafana/Machine Data.json
 /InfluxDB_Grafana/Operation_Statistics.json
+/InfluxDB_Grafana/grafanadata/
+/InfluxDB_Grafana/influxdata/
