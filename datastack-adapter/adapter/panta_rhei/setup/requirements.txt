@@ -1,4 +1,0 @@
-requests
-pytz
-datetime
-python-logstash==0.4.6

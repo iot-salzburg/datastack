@@ -1,33 +1,23 @@
-# Datastack for storing, visualizing and analysing data
+# DataStack for Storing, Visualizing and Analysing data
 
-#### Composed by the Elastic Stack, Grafana and Jupyter
-
-
-The datastack is based on the following Components:
-* [Elasticsearch 6.2](https://github.com/elastic/elasticsearch-docker)
-* [Logstash 6.2](https://github.com/elastic/logstash-docker)
-* [Kibana 6.2](https://github.com/elastic/kibana-docker)
-* [Grafana 6](http://docs.grafana.org/)
-* [Spark](http://spark.apache.org/docs/2.1.1)
-* [Hadoop](http://hadoop.apache.org/docs/r2.7.3)
-* [PySpark](http://spark.apache.org/docs/2.1.1/api/python)
-* [Anaconda3-5](https://www.anaconda.com/distribution/)
-
-The easiest way to feed data into the DataStack is to use the
-[datastack-adapter](https://github.com/iot-salzburg/dtz_datastack/tree/master/datastack-adapter) to stream data
-from the [panta-rhei messaging system](https://github.com/iot-salzburg/dtz_datastack/tree/master/elasticStack).
+#### Composed of Grafana, Jupyter and InfluxDB or optionally Elastic Stack
 
 
+The DataStack is based on the following Components:
+* [Anaconda](https://www.anaconda.com/distribution/)
+* [Jupyter](https://jupyter.org/)
+* [GPU-Jupyter](https://github.com/iot-salzburg/gpu-jupyter)
+* [Grafana](http://docs.grafana.org/)
+* [InfluxDB](https://www.influxdata.com/)
+* [Elasticsearch](https://github.com/elastic/elasticsearch-docker)
+* [Logstash](https://github.com/elastic/logstash-docker)
+* [Kibana](https://github.com/elastic/kibana-docker)
 
-## Setup
-
-1. [Requirements](#requirements)
-2. [Elastic Stack](elasticStack/README.md) (in sub-directory)
-3. [Datastack Adapter](datastack-adapter/README.md) (in sub-directory)
-4. [Grafana](grafana/README.md) (in sub-directory)
-5. [Jupyter Notebook](jupyter/README.md) (in sub-directory)
-4. [Proxy Config](#proxy-config)
-5. [Trouble Shooting](#trouble-shooting)
+Additionally, a DataStack Adapter is provided to feed data into the respective database.
+The DataStack Adapter is based on the [Panta Rhei project](https://github.com/iot-salzburg/panta_rhei), 
+i.e., it expects data to be accessible as in Panta Rhei with a Kafka 
+messaging layer and SensorThings semantic. 
+This Adapter, however, can be easily changed to other data sources. 
 
 
 ## Requirements
@@ -45,14 +35,14 @@ from the [panta-rhei messaging system](https://github.com/iot-salzburg/dtz_datas
     ```
     This should output `{}`:
 
-4. Clone this repository on the manager node of the docker swarm or on a master node.
+4. Clone this repository recursively on the manager node of the docker swarm or on a master node.
 
     ```bash
-    git clone https://github.com/iot-salzburg/dtz_datastack.git
+    git clone --recurse-submodules  https://github.com/iot-salzburg/dtz_datastack.git
     cd dtz_datastack/
     ```
 
-5. Set `vm.max_map_count` permanently in `/etc/sysctl.conf`:
+5. **(only for the Elastic Stack)** Set `vm.max_map_count` permanently in `/etc/sysctl.conf`:
     ```bash
     grep vm.max_map_count /etc/sysctl.conf
     # -> vm.max_map_count=262144
@@ -61,12 +51,19 @@ from the [panta-rhei messaging system](https://github.com/iot-salzburg/dtz_datas
     sysctl -w vm.max_map_count=262144
     ```
 
-### Contiue with
 
-2. [Elastic Stack](elasticStack/README.md) (in sub-directory)
-3. [Datastack Adapter](datastack-adapter/README.md) (in sub-directory)
-4. [Grafana](grafana/README.md) (in sub-directory)
-5. [Jupyter Notebook](jupyter/README.md) (in sub-directory)
+## Setup
+
+Continue the setup with the following parts. Note that there are two possible 
+databases, however, InfluxDB is recommended:
+
+1. [InfluxDB and Grafana](InfluxDB_Grafana/README.md) (in a sub-directory)
+2. (Alternative to InfluxDB) [Elastic Stack](elasticStack/README.md) and [Grafana](grafana/README.md) (in a sub-directory)
+3. [InfluxDB Adapter](influxdb-adapter/README.md) (in a sub-directory)
+3. (Alternative to InfluxDB) [ElaticStack Adapter](elastic-adapter/README.md) (in a sub-directory)
+5. [Jupyter Notebook](jupyter/README.md) (in a sub-directory)
+4. [Proxy Config](#proxy-config)
+5. [Trouble Shooting](#trouble-shooting)
 
 
 

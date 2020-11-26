@@ -105,8 +105,8 @@ venv.bak/
 
 .idea/
 
-datastack-adapter/Dockerfile.save*
-datastack-adapter/panta_rhei
+elastic-adapter/Dockerfile.save*
+elastic-adapter/panta_rhei
 elasticStack/docker-compose.yml.save*
 
 *.save*
@@ -115,4 +115,6 @@ jupyter/src/data
 grafana/grafanadata
 !grafana/grafanadata/dashboards
 /elasticStack/elasticsearch/esdata/
-/datastack-adapter/adapter/panta_rhei/
+/elastic-adapter/adapter/panta_rhei/
+/InfluxDB_Grafana/Machine Data.json
+/InfluxDB_Grafana/Operation_Statistics.json

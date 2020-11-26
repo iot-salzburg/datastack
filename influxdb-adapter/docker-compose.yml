@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  datastore-adapter:
+    image: 127.0.0.1:5001/datastore-adapter
+    build: .
+    network_mode: host
+    environment:
+      # InfluxDB configuration
+      INFLUXDB_HOST: "192.168.48.71"
+      # Panta Rhei configuration
+      CLIENT_NAME: "influxdb-adapter"
+      SYSTEM_NAME: "at.srfg.iot.dtz"
+      SENSORTHINGS_HOST: "192.168.48.71:8082"
+      BOOTSTRAP_SERVERS: "192.168.48.71:9092,192.168.48.71:9093,192.168.48.71:9094"
