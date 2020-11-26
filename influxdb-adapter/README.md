@@ -72,6 +72,11 @@ Check if data is stored in `InfluxDB` using this script
  (it counts the number of rows in a set database):
  
  ```bash
+# using curl
+curl -G 'http://localhost:8086/query?db=at.srfg.iot.dtz' --data-urlencode 'q=SELECT * FROM "at.srfg.iot.dtz"'
+#> {"results":[{"statement_id":1234}]}
+
+# using a python script:
 python3 InfluxDB_Grafana/db_interface.py
 #> {'time': '1970-01-01T00:00:00Z', 'count_result': 321825}
 ```

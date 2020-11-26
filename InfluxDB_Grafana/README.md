@@ -56,6 +56,9 @@ InfluxDB provides a RestAPI that can be executed via `curl`
 curl -XPOST 'http://localhost:8086/query' --data-urlencode 'q=CREATE DATABASE "mydb"'
 curl -XPOST 'http://localhost:8086/query?db=mydb' --data-urlencode 'q=SELECT * INTO "newmeas" FROM "mymeas"'
 curl -G 'http://localhost:8086/query?db=mydb&pretty=true' --data-urlencode 'q=SELECT * FROM "mymeas"'
+
+# or for this database:
+curl -G 'http://localhost:8086/query?db=at.srfg.iot.dtz' --data-urlencode 'q=SELECT * FROM "at.srfg.iot.dtz"'
 ```
 More API interface examples can be found [here](https://docs.influxdata.com/influxdb/v1.8/tools/api/).
 

@@ -39,7 +39,7 @@ This Adapter, however, can be easily changed to other data sources.
 
     ```bash
     git clone --recurse-submodules  https://github.com/iot-salzburg/dtz_datastack.git
-    cd dtz_datastack/
+    cd datastack/
     ```
 
 5. **(only for the Elastic Stack)** Set `vm.max_map_count` permanently in `/etc/sysctl.conf`:
@@ -50,6 +50,15 @@ This Adapter, however, can be easily changed to other data sources.
     # or set it temporarily 
     sysctl -w vm.max_map_count=262144
     ```
+
+6. Create a new virtualenv and install the requirements:
+
+   ```bash
+   cd ../datastack
+   pip3 install virtualenv
+   source .venv/bin/activate
+   pip3 install -r influxdb-adapter/requirements.txt
+   ```
 
 
 ## Setup

@@ -121,3 +121,4 @@ grafana/grafanadata
 /InfluxDB_Grafana/grafanadata/
 /InfluxDB_Grafana/influxdata/
 /influxdb-adapter/adapter/panta_rhei/
+/elastic-adapter/adapter/panta_rhei/
