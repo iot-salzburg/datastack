@@ -1,11 +1,11 @@
 {
   "subscribed_datastreams": [
-    "at.srfg.iot.dtz.sigmatek.Current of the Sigmatek PLC",
-    "at.srfg.iot.dtz.pixtend.Current of the PiXtend",
-    "at.srfg.iot.dtz.prusa.Current of the Prusa 3D printer",
-    "at.srfg.iot.dtz.panda.Current of the Panda Robot",
-    "at.srfg.iot.dtz.dtz-labor.IoT Labor Humidity",
-    "at.srfg.iot.dtz.dtz-labor.IoT Labor Temperature",
+    "at.srfg.iot.dtz.Sigmatek.Current of the Sigmatek PLC",
+    "at.srfg.iot.dtz.PiXtend.Current of the PiXtend",
+    "at.srfg.iot.dtz.Prusa.Current of the Prusa 3D printer",
+    "at.srfg.iot.dtz.Panda.Current of the Panda Robot",
+    "at.srfg.iot.dtz.DTZ Labor.IoT Labor Humidity",
+    "at.srfg.iot.dtz.DTZ Labor.IoT Labor Temperature",
     "at.srfg.iot.dtz.Prusa i3.Actual Nozzle Temperature Prusa",
     "at.srfg.iot.dtz.Prusa i3.Target Nozzle Temperature Prusa",
     "at.srfg.iot.dtz.Prusa i3.Actual Bed Temperature Prusa",
@@ -28,14 +28,14 @@
     "at.srfg.iot.dtz.shelf.Shelf Status 7",
     "at.srfg.iot.dtz.shelf.Shelf Status 8",
     "at.srfg.iot.dtz.shelf.Shelf Status 9",
-    "at.srfg.iot.dtz.dtz-labor.bluSensor APM 1 pm concentration",
-    "at.srfg.iot.dtz.dtz-labor.bluSensor APM 2.5 pm concentration",
-    "at.srfg.iot.dtz.dtz-labor.bluSensor APM 4 pm concentration",
-    "at.srfg.iot.dtz.dtz-labor.bluSensor APM 10 pm concentration",
-    "at.srfg.iot.dtz.dtz-labor.bluSensor AIQ air pollution",
-    "at.srfg.iot.dtz.dtz-labor.bluSensor AIQ CO2 concentration",
-    "at.srfg.iot.dtz.dtz-labor.bluSensor AIQ dew point",
-    "at.srfg.iot.dtz.dtz-labor.bluSensor AIQ temperature",
-    "at.srfg.iot.dtz.dtz-labor.bluSensor AIQ humidity"
+    "at.srfg.iot.dtz.DTZ Labor.bluSensor APM 1 pm concentration",
+    "at.srfg.iot.dtz.DTZ Labor.bluSensor APM 2.5 pm concentration",
+    "at.srfg.iot.dtz.DTZ Labor.bluSensor APM 4 pm concentration",
+    "at.srfg.iot.dtz.DTZ Labor.bluSensor APM 10 pm concentration",
+    "at.srfg.iot.dtz.DTZ Labor.bluSensor AIQ air pollution",
+    "at.srfg.iot.dtz.DTZ Labor.bluSensor AIQ CO2 concentration",
+    "at.srfg.iot.dtz.DTZ Labor.bluSensor AIQ dew point",
+    "at.srfg.iot.dtz.DTZ Labor.bluSensor AIQ temperature",
+    "at.srfg.iot.dtz.DTZ Labor.bluSensor AIQ humidity"
   ]
 }
