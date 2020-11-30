@@ -13,6 +13,7 @@ RUN chown -R root:root /etc/grafana && \
   chown -R grafana:grafana /usr/share/grafana
 
 RUN grafana-cli plugins install grafana-worldmap-panel \
+ && grafana-cli plugins install natel-plotly-panel 0.0.5 \
  && grafana-cli plugins install ae3e-plotly-panel \
  && grafana-cli plugins install grafana-piechart-panel \
  && grafana-cli plugins install simpod-json-datasource

@@ -65,7 +65,11 @@ try:
             data["Datastream"]["name"] = received_quantity["Datastream"]["name"].split(".")[-1]
             data["Datastream"]["@iot.id"] = received_quantity["Datastream"]["@iot.id"]
             data["Datastream"]["@iot.selfLink"] = received_quantity["Datastream"]["@iot.selfLink"]
-            data["result"] = received_quantity["result"]
+            try:
+                data["result"] = float(received_quantity["result"])
+            except ValueError:
+                print(f"couldn't cast '{received_quantity['result']}' of type '{type(received_quantity['result'])}' to float.")
+                continue
             data["phenomenonTime"] = received_quantity["phenomenonTime"]
             # data["resultTime"] = received_quantity["resultTime"]
 
