@@ -2,7 +2,7 @@
   "subscribed_datastreams": [
     "at.srfg.iot.dtz.Sigmatek.Current of the Sigmatek PLC",
     "at.srfg.iot.dtz.PiXtend.Current of the PiXtend",
-    "at.srfg.iot.dtz.Prusa.Current of the Prusa 3D printer",
+    "at.srfg.iot.dtz.Prusa i3.Current of the Prusa 3D printer",
     "at.srfg.iot.dtz.Panda.Current of the Panda Robot",
     "at.srfg.iot.dtz.DTZ Labor.IoT Labor Humidity",
     "at.srfg.iot.dtz.DTZ Labor.IoT Labor Temperature",
